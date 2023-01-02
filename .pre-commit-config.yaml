@@ -28,6 +28,7 @@ repos:
           additional_dependencies:
           - pydantic
           - types-PyYaml==6.0
+          - types-requests
 
 -   repo: https://github.com/PyCQA/isort
     rev: 5.11.4
