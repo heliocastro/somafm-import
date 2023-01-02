@@ -1,0 +1,95 @@
+[tool.poetry]
+name = "somafm"
+version = "0.1.0"
+description = ""
+authors = ["Helio Chissini de Castro <heliocastro@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+
+
+[tool.poetry.group.dev.dependencies]
+bandit = "^1.7.4"
+black = "^22.12.0"
+flake8 = "^6.0.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+[tool.isort]
+multi_line_output = 3
+include_trailing_comma = true
+force_grid_wrap = 0
+use_parentheses = true
+line_length = 120
+
+[tool.black]
+line-length = 120
+include = '\.pyi?$'
+exclude = '''
+(
+  /(
+      \.eggs         # exclude a few common directories in the
+    | \.git          # root of the project
+    | \.hg
+    | \.mypy_cache
+    | \.tox
+    | \.venv
+    | _build
+    | buck-out
+    | build
+    | dist
+  )/
+  | foo.py           # also separately exclude a file named foo.py in
+                     # the root of the project
+)
+'''
+
+[tool.flake8]
+max-line-length = 120
+
+[tool.pytest.ini_options]
+addopts = [
+    "--import-mode=importlib",
+]
+log_cli = true
+log_cli_level = "INFO"
+pythonpath = "src"
+
+[tool.pylint.messages_control]
+disable = [
+    "abstract-method",
+    "arguments-differ",
+    "attribute-defined-outside-init",
+    "blacklisted-name",
+    "chained-comparison",
+    "duplicate-code",
+    "eval-used",
+    "exec-used",
+    "expression-not-assigned",
+    "fixme",
+    "global-statement",
+    "invalid-name",
+    "import-error",
+    "logging-fstring-interpolation",
+    "missing-docstring",
+    "no-member",
+    "no-name-in-module",
+    "protected-access",
+    "redefined-argument-from-local",
+    "redefined-outer-name",
+    "reimported",
+    "stop-iteration-return",
+    "too-few-public-methods",
+    "too-many-ancestors",
+    "too-many-arguments",
+    "too-many-branches",
+    "too-many-instance-attributes",
+    "too-many-lines",
+    "too-many-locals",
+    "too-many-return-statements",
+    "too-many-statements",
+    "unexpected-special-method-signature",
+    "unspecified-encoding"
+]
