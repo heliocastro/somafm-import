@@ -18,7 +18,7 @@ class Soma:
     def populate(self) -> None:
         somafm_endpoint: str = os.getenv("SOMAFM_URL", default="https://somafm.com/channels.json")
 
-        req = requests.get(somafm_endpoint)
+        req = requests.get(somafm_endpoint, timeout=10)
         if req.status_code != requests.codes.ok:
             return
         channels = json.loads(req.text)
