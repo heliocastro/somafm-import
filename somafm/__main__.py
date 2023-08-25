@@ -1,5 +1,7 @@
 # SPDX-License-Identifier: MIT
 # SPDX-FileCopyrightText: 2023 Helio Chissini de Castro
+from __future__ import annotations
+
 import click
 from dotenv import load_dotenv
 

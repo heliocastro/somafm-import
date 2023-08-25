@@ -1,7 +1,8 @@
 # SPDX-License-Identifier: MIT
 # SPDX-FileCopyrightText: 2023 Helio Chissini de Castro
+from __future__ import annotations
+
 import importlib
-from typing import List
 
 import click
 
@@ -12,7 +13,7 @@ class SomaPlugins:
     """
 
     _plugins = ["radiola"]
-    _commands: List[click.MultiCommand] | None = None
+    _commands: list[click.MultiCommand] | None = None
 
     def __init__(self) -> None:
         # Load plugins is specified
@@ -28,6 +29,6 @@ class SomaPlugins:
         pass
 
     @property
-    def commands(self) -> List[click.MultiCommand] | None:
+    def commands(self) -> list[click.MultiCommand] | None:
         """Return the dynamic commands from plugins"""
         return self._commands
