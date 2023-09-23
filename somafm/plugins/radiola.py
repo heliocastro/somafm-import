@@ -2,8 +2,10 @@
 # SPDX-FileCopyrightText: 2023 Helio Chissini de Castro
 from __future__ import annotations
 
+import logging
 import xml.etree.ElementTree as ElementTree
 from pathlib import Path
+from xml.etree.ElementTree import Element, SubElement
 
 import click
 from appdirs import AppDirs
@@ -31,14 +33,16 @@ class RadiolaPlugin:
         defuse_stdlib()
 
         if radiola_config.exists():
+            logging.info("Importing current config from Radiola.")
             tree = parse(radiola_config)
             root = tree.getroot()
             self._body = root.findall("body")
         else:
-            root = ElementTree.Element("ompl")
+            logging.info("Creating new config to Radiola.")
+            root = Element("ompl")
             root.set("version", "2.0")
-            ElementTree.SubElement(root, "head")
-            self._body = ElementTree.SubElement(root, "body")
+            SubElement(root, "head")
+            self._body = SubElement(root, "body")
 
         # Create the tree
         self.update_tree()
@@ -53,15 +57,25 @@ class RadiolaPlugin:
 
     def update_tree(self) -> None:
         """Create Radiola file config"""
-        for channel in self._body[0]:
-            if channel.attrib["text"] == "SomaFM":
-                self._body[0].remove(channel)
 
-        group = ElementTree.SubElement(self._body[0], "outline")
+        self._body.findall
+
+        # group: Element | None = SubElement(self._body, "outline")
+        group: Element | None = None
+        for channel in self._body.findall("ouline"):
+            if channel.attrib["text"] == "SomaFM":
+                # Clean all entries
+                channel.clear()
+                group = channel
+
+        # We didn't found SomaFM channel group
+        if not group:
+            group = SubElement(self._body, "outline")
+
         group.set("text", "SomaFM")
         group.set("group", "true")
         for channel in self._soma.channels:
-            sub = ElementTree.SubElement(group, "outline")
+            sub = SubElement(group, "outline")
             sub.set("text", channel["title"])
             sub.set("fav", "true")
             for pls in channel["playlists"]:
