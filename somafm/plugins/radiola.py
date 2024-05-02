@@ -3,15 +3,13 @@
 from __future__ import annotations
 
 import logging
-import xml.etree.ElementTree as ElementTree
 from pathlib import Path
-from xml.etree.ElementTree import Element, SubElement
+from typing import Any
+from xml.etree.ElementTree import Element, ElementTree, SubElement, indent, tostring
 
 import click
 from appdirs import AppDirs
-from defusedxml import defuse_stdlib
 from defusedxml.ElementTree import parse
-from defusedxml.minidom import parseString
 
 from somafm.soma import Soma
 
@@ -29,17 +27,15 @@ class RadiolaPlugin:
 
         radiola_config: Path = Path(AppDirs(RADIOLA_APP_IDENTIFIER).user_data_dir) / "bookmarks.opml"
 
-        # Override standard xml functions
-        defuse_stdlib()
-
+        root: Element | Any = Element("ompl")
         if radiola_config.exists():
             logging.info("Importing current config from Radiola.")
             tree = parse(radiola_config)
             root = tree.getroot()
-            self._body = root.findall("body")
+            # Take only the fist element
+            self._body = root.findall("body")[0]
         else:
             logging.info("Creating new config to Radiola.")
-            root = Element("ompl")
             root.set("version", "2.0")
             SubElement(root, "head")
             self._body = SubElement(root, "body")
@@ -47,29 +43,27 @@ class RadiolaPlugin:
         # Create the tree
         self.update_tree()
 
-        tree = ElementTree.ElementTree(root)
+        tree = ElementTree(root)
         if self._update:
-            ElementTree.indent(tree, "  ")
+            indent(tree, "  ")
             tree.write(radiola_config, short_empty_elements=False, encoding="utf-8")
         else:
-            dom = parseString(ElementTree.tostring(root))
-            print(dom.toprettyxml())
+            indent(root)
+            print(tostring(root, encoding="unicode"))
 
     def update_tree(self) -> None:
         """Create Radiola file config"""
 
-        self._body.findall
-
         # group: Element | None = SubElement(self._body, "outline")
         group: Element | None = None
-        for channel in self._body.findall("ouline"):
+        for channel in self._body.findall("outline"):
             if channel.attrib["text"] == "SomaFM":
                 # Clean all entries
                 channel.clear()
                 group = channel
 
         # We didn't found SomaFM channel group
-        if not group:
+        if not isinstance(group, Element):
             group = SubElement(self._body, "outline")
 
         group.set("text", "SomaFM")

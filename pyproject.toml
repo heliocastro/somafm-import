@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "somafm"
-version = "0.2.2"
+version = "0.2.3"
 description = ""
 authors = ["Helio Chissini de Castro <heliocastro@gmail.com>"]
 readme = "README.md"
