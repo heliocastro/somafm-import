@@ -1,12 +1,11 @@
 # SPDX-License-Identifier: MIT
-# SPDX-FileCopyrightText: 2023 Helio Chissini de Castro
-from __future__ import annotations
+# SPDX-FileCopyrightText: 2026 Helio Chissini de Castro
 
-import json
-import os
 from typing import Any
 
 import requests
+
+from . import logger, settings
 
 
 class Soma:
@@ -17,13 +16,18 @@ class Soma:
         self.populate()
 
     def populate(self) -> None:
-        somafm_endpoint: str = os.getenv("SOMAFM_URL", default="https://somafm.com/channels.json")
+        try:
+            response = requests.get(
+                settings.SOMAFM_URL,
+                timeout=120,
+            )
+            response.raise_for_status()
 
-        req = requests.get(somafm_endpoint, timeout=10)
-        if req.status_code != requests.codes.ok:
+            channels = response.json()
+            self._channels = channels["channels"]
+        except requests.exceptions.RequestException as e:
+            logger.error(f"Request not successful: {e}")
             return
-        channels = json.loads(req.text)
-        self._channels = channels["channels"]
 
     @property
     def channels(self) -> list[dict[str, Any]]:

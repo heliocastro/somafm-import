@@ -1,16 +1,12 @@
 # SPDX-License-Identifier: MIT
-# SPDX-FileCopyrightText: 2023 Helio Chissini de Castro
-from __future__ import annotations
+# SPDX-FileCopyrightText: 2026 Helio Chissini de Castro
 
 import click
-from dotenv import load_dotenv
 
 from somafm.somaplugins import SomaPlugins
 
 
 def main() -> None:
-    # Read env file
-    load_dotenv()
 
     # Start application
     app = SomaPlugins()
