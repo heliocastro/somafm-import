@@ -1,7 +1,12 @@
 # SomaFM Import
 
-This is a simple SomaFM channel list import to use in several applications.
+**DISCLAIMER**
 
+This software is for personal use, and their usage should comply with [SomaFM Terms of Service](https://somafm.com/contact/tos.html).
+
+
+## Description
+This is a simple SomaFM channel list import to use in several applications.
 
 
 ## Available Plugins
