@@ -6,40 +6,26 @@ This software is for personal use, and their usage should comply with [SomaFM Te
 
 
 ## Description
-This is a simple SomaFM channel list import to use in several applications.
+A simple SomaFM channel list importer and conversion for audio player applications.
 
 
-## Available Plugins
+## Available Audio PLayer Plugins
 [**Radiola**](https://github.com/SokoloffA/radiola): A Mac simple systray stream player
 * Generates a bookmark.opml to copy to your app config folder:
 ```bash
-   python simport.py radiola
+   uv run soma radiola
 ```
 
 ## Requirements
 - Python 3.11+
 
 ## Development
-* Create a python environment to avoid polute your system ( or docker env )
-* Install poetry and pre-commit
+* Create a python environment to avoid pollute your system ( or docker env )
+* Install uv
 
   ```bash
-     $ pip install -U poetry pre-commit
-     ```
-
-* Install the dependencies
-
-  ```bash
-     $ poetry install
-     ```
-
-* Run precommit setup
-
-  ```bash
-     $ pre-commit init
+  uv sync
      ```
 
 ## References
-* [Poetry](https://python-poetry.org/)
-* [pyproject.toml](https://python-poetry.org/docs/pyproject/)
-* [pre-commit](https://pre-commit.com/)
+* [somafm](https://somafm.com/)

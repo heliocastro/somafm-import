@@ -1,24 +1,18 @@
-[build-system]
-requires = ["uv_build>=0.11.7,<0.12"]
-build-backend = "uv_build"
-
 [project]
 name = "somafm"
-version = "0.33.0"
-description = ""
+version = "0.33.1"
+description = "A simple SomaFM channel list importer and conversion for audio player applications. This software is for personal use, and their usage should comply with SomaFM Terms of Service, https://somafm.com/contact/tos.html."
 readme = "README.md"
 requires-python = ">=3.13"
-authors = [
-  { name = "Helio Chissini de Castro", email = "dev@heliocastro.info" }
-]
+authors = [{ name = "Helio Chissini de Castro", email = "dev@heliocastro.info" }]
 dependencies = [
-  "appdirs>=1.4.4",
-  "click>=8.1.7",
-  "defusedxml>=0.7.1",
-  "lxml>=6.1.0",
-  "pydantic-settings>=2.13.1",
-  "requests>=2.28.1",
-  "rich>=15.0.0",
+    "appdirs>=1.4.4",
+    "click>=8.5.0",
+    "defusedxml>=0.7.1",
+    "lxml>=6.1.3",
+    "pydantic-settings>=2.16.1",
+    "requests>=2.34.2",
+    "rich>=15.0.0",
 ]
 
 [project.scripts]
@@ -26,12 +20,16 @@ soma = "somafm.__main__:main"
 
 [dependency-groups]
 dev = [
-  "lxml-stubs>=0.5.1",
-  "prek>=0.3.9",
-  "pytest-cov>=5.0.0",
-  "ruff>=0.3.7",
-  "ty>=0.0.31",
+    "lxml-stubs>=0.5.1",
+    "prek>=0.5.7",
+    "pytest-cov>=7.1.0",
+    "ruff>=0.17.2",
+    "ty>=0.0.92",
 ]
+
+[build-system]
+requires = ["uv_build>=0.11.7,<0.12"]
+build-backend = "uv_build"
 
 [tool.pytest.ini_options]
 addopts = ["--import-mode=importlib"]
@@ -94,10 +92,10 @@ flake8-tidy-imports.ban-relative-imports = "all"
 # Allow unused variables when underscore-prefixed.
 dummy-variable-rgx = "^(_+|(_+[a-zA-Z0-9_]*[a-zA-Z0-9]+?))$"
 
+[tool.ruff.lint.isort]
+case-sensitive = true
+
 [tool.ruff.format]
 quote-style = "double"
 indent-style = "space"
 skip-magic-trailing-comma = false
-
-[tool.ruff.lint.isort]
-case-sensitive = true

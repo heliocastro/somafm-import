@@ -24,7 +24,11 @@ class RadiolaPlugin:
     Mac systemtray application
     """
 
-    def __init__(self, update: bool = False) -> None:
+    def __init__(
+        self,
+        update: bool = False,
+        rewrite: bool = False,
+    ) -> None:
         self._soma = Soma()
         self._update: bool = update
         self.body: Any
@@ -50,6 +54,7 @@ class RadiolaPlugin:
         self.update_tree()
 
         if self._update:
+            logger.info(f"Updating config file at {radiola_config}")
             tree.write(
                 radiola_config,
                 pretty_print=True,
@@ -65,7 +70,7 @@ class RadiolaPlugin:
                 )
             )
 
-    def find_group(self, name: str) -> etree.ElementBase | None:
+    def find_group(self, name: str) -> Any:  # noqa: ANN401
         for outline in self.body.findall("outline"):
             if outline.get("text") == name and outline.get("group") == "true":
                 return outline
@@ -74,8 +79,8 @@ class RadiolaPlugin:
     def find_radio(
         self,
         name: str,
-        parent: etree._ElementBase | None = None,
-    ) -> etree.ElementBase | None:
+        parent: Any = None,  # noqa: ANN401
+    ) -> Any:  # noqa: ANN401
         search_element = parent if parent is not None else self.body
         for outline in search_element.findall("outline"):
             if outline.get("text") == name:
